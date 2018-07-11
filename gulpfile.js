@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
+const clean = require('gulp-rimraf');
 
 const scripts = require('./scripts');
 const styles = require('./styles');
@@ -27,14 +28,16 @@ gulp.task('js', () => {
 });
 
 gulp.task('html', () => {
-	gulp.src('./src/**/*.html')
-		.pipe(gulp.dest('./dist/'))
+	gulp.src('./src/app/**/*.html')
+		.pipe(gulp.dest('./dist/views/'))
 		.pipe(browserSync.reload({
 			stream: true
 		}));
+	gulp.src('./src/index.html')
+		.pipe(gulp.dest('./dist/'));	
 });
 
-gulp.task('build', () => {
+gulp.task('build', ['clean'], () => {
 	gulp.start(['css', 'js', 'html']);
 });
 
@@ -54,3 +57,9 @@ gulp.task('start', (callback) => {
 	gulp.watch(['./src/**/*.js'], ['js']);
 	gulp.watch(['./src/**/*.html'], ['html']);
 });
+
+gulp.task('clean', () => {
+	console.log('Cleaning ./dist folder ...');
+	return gulp.src("./build/*", { read: false }).
+		pipe(clean());
+}) 

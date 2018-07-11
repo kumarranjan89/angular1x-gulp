@@ -1,0 +1,23 @@
+<h1>{{message}}</h1>
+
+
+<section>
+	<form ng-submit="saveDestination()">
+		<div class="form-group">
+			<label>City</label>
+			<input type="text" name="city" ng-model="newDestination.city">
+		</div>
+		<div class="form-group">
+			<label>Country</label>
+			<input type="text" name="country" ng-model="newDestination.country">
+		</div>
+		<input type="submit" name="submit" value="add new destination">
+	</form>
+</section>
+
+<section>
+	<h2>Your Trip</h2>
+	<ul>
+		<li ng-repeat="dest in destinations">{{dest.city}} - {{dest.country}}</li>
+	</ul>
+</section>
